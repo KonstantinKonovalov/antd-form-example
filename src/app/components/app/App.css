@@ -1,0 +1,92 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+h2 {
+    line-height: 1;
+}
+
+.header {
+  margin-top: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row-wrapper {
+    margin-right: 25px;
+}
+
+.form-row-wrapper:last-of-type {
+    margin-right: 0;
+}
+
+.form-row {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.form-row:last-of-type {
+    margin-bottom: 0;
+}
+
+.form__item_inline {
+    display: flex!important;
+    flex-direction: row-reverse;
+}
+
+.form__tooltip .ant-tooltip-inner {
+    color: #000;
+    background-color: #fff;
+    border: solid 1px #ececec;
+    max-width: 380px;
+    padding: 15px;
+}
+
+.form__tooltip.ant-tooltip-placement-right .ant-tooltip-arrow {
+    border-right-color: #ccc;
+}
+
+.form__help {
+    background: url('./help.svg') center no-repeat;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.radio__item.ant-radio-wrapper {
+    display: block;
+}
+
+.form-buttons {
+    padding-top: 20px;
+    margin-top: 25px;
+    border-top: 2px solid #ccc;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-buttons__button {
+    margin-right: 10px;
+}
+
+.form-buttons_button:last-of-type {
+    margin-right: 0;
+}
+
+.tooltip_cancel {
+    display: inline-block;
+    margin-left: 10px;
+    color: #8dcdfb;
+    font-weight: 600;
+}
+
+.tooltip_cancel:hover {
+    cursor: pointer;
+}
+

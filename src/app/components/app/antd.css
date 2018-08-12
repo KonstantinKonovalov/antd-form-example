@@ -1,0 +1,68 @@
+.ant-select-selection--single {
+    background: #f9f9f9;
+}
+
+.ant-input:not(.ant-calendar-picker-input) {
+    text-align: right;
+}
+
+.ant-form-item-required:before,
+.ant-form-item-required:after,
+.ant-form-item-label label:after {
+    content: '';
+}
+
+.ant-tooltip-placement-right .ant-tooltip-arrow {
+    left: 1px;
+    border-width: 5px 7px 5px 0;
+}
+
+.ant-tooltip {
+    max-width: 100%;
+}
+
+.tooltip-wrapper {
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+.ant-input-number:hover .ant-input-number-handler-wrap {
+    opacity: 0;
+}
+
+.ant-input-number {
+    width: 100%;
+}
+
+.ant-form-item {
+    margin-bottom: 0;
+}
+
+.ant-form-explain {
+    display: none;
+}
+
+.ant-notification.ant-notification-topRight {
+    right: 50%!important;
+    transform: translateX(50%);
+}
+
+.ant-notification-notice {
+    padding: 10px 24px;
+    background: #676767
+}
+
+.ant-notification {
+    width: 260px;
+}
+
+.ant-notification-notice-close {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ant-notification-notice-message {
+    margin: 0;
+    color: #fff;
+}
