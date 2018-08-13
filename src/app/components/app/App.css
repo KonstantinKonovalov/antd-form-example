@@ -28,6 +28,7 @@ h2 {
 .form-row {
     display: flex;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .form-row:last-of-type {

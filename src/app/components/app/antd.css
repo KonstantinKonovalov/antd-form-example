@@ -1,5 +1,11 @@
 .ant-select-selection--single {
-    background: #f9f9f9;
+    background: #dedede;
+}
+
+.ant-select-selection__placeholder,
+.ant-select-search__field__placeholder {
+    font-weight: 600;
+    color: #9e9b9b;
 }
 
 .ant-input:not(.ant-calendar-picker-input) {
@@ -65,4 +71,16 @@
 .ant-notification-notice-message {
     margin: 0;
     color: #fff;
+}
+
+@media (max-width: 575px) {
+    .ant-form-item-label {
+        line-height: 39.9999px;
+        padding: 0;
+    }
+
+    .ant-form-item-label,
+    .ant-form-item-control-wrapper {
+        width: initial;
+    }
 }

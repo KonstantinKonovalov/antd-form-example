@@ -16,7 +16,9 @@ interface IState {
         depositDeadlineDate: moment.Moment,
         depositDeadlineDays: string,
         depositType: string
-    }
+    },
+    currencyType: string,
+    today: moment.Moment
 }
 
 interface IProps extends FormComponentProps {}
@@ -27,7 +29,9 @@ class AppContainer extends React.Component<IProps, IState> {
 
         this.state = {
             actionsType: 'prolong',
-            formValues: undefined
+            formValues: undefined,
+            currencyType: 'rub',
+            today: moment()
         }
 
         this.renderTooltip = this.renderTooltip.bind(this);
@@ -39,10 +43,38 @@ class AppContainer extends React.Component<IProps, IState> {
         this.formatDays = this.formatDays.bind(this);
         this.setFormValues = this.setFormValues.bind(this);
         this.openNotification = this.openNotification.bind(this);
+        this.onChangeDepositCurrency = this.onChangeDepositCurrency.bind(this);
+        this.getAmountLabel = this.getAmountLabel.bind(this);
+        this.disableDeadlineDate = this.disableDeadlineDate.bind(this);
     }
 
     public componentDidMount() {
         this.props.form.validateFields();
+    }
+
+    public disableDeadlineDate(date: moment.Moment) {
+        if (!date) {
+            return false;
+        }
+
+        return this.state.today.valueOf() > date.valueOf();
+    }
+
+    public getAmountLabel() {
+        switch (this.state.currencyType) {
+            case 'rub':
+                return String.fromCharCode(8381);
+            case 'dol':
+                return String.fromCharCode(36);
+            case 'eur':
+                return String.fromCharCode(0x20AC);
+            default:
+                return String.fromCharCode(8381);
+        }
+    }
+
+    public onChangeDepositCurrency(value: string, _option: any) {
+        this.setState({ currencyType: value });
     }
 
     public openNotification() {
@@ -157,6 +189,7 @@ class AppContainer extends React.Component<IProps, IState> {
         const depositAmountError = isFieldTouched('depositAmount') && getFieldError('depositAmount');
         const depositDeadlineDaysError = isFieldTouched('depositDeadlineDays') && getFieldError('depositDeadlineDays');
         const depositAccountError = this.state.actionsType !== 'prolong' && isFieldTouched('depositAccount') && getFieldError('depositAccount');
+        const depositDeadlineDateError = isFieldTouched('depositDeadlineDate') && getFieldError('depositDeadlineDate');
 
         return (
             <div className="App">
@@ -189,11 +222,13 @@ class AppContainer extends React.Component<IProps, IState> {
                                 </span>
                                 <Form.Item validateStatus={depositCurrencyError ? 'error' : 'success'}>
                                     {getFieldDecorator('depositCurrency', {
-                                        rules: [{ required: true, message: ' ' }]
+                                        rules: [{ required: true, message: ' ' }],
+                                        initialValue: 'rub'
                                         })(
                                             <Select
                                                 placeholder="Валюта"
                                                 style={{ width: 200 }}
+                                                onChange={this.onChangeDepositCurrency}
                                             >
                                                 <Select.Option value="rub">Рубль</Select.Option>
                                                 <Select.Option value="dol">Доллар</Select.Option>
@@ -211,7 +246,7 @@ class AppContainer extends React.Component<IProps, IState> {
                                     Первоначальный взнос
                                 </span>
                                 <Form.Item
-                                    label={String.fromCharCode(8381)}
+                                    label={this.getAmountLabel()}
                                     className="form__item_inline"
                                     validateStatus={depositAmountError ? 'error' : 'success'}
                                 >
@@ -222,6 +257,7 @@ class AppContainer extends React.Component<IProps, IState> {
                                             <Input
                                                 type="text"
                                                 placeholder="0.00"
+                                                style={{width: 200}}
                                             />
                                         )
                                     }
@@ -235,7 +271,6 @@ class AppContainer extends React.Component<IProps, IState> {
                                     placement="right"
                                     overlayClassName="form__tooltip"
                                     title={this.renderTooltip()}
-                                    // className="tooltip-wrapper"
                                 >
                                     Срок вклада
                                     <span className="form__help" />
@@ -250,7 +285,6 @@ class AppContainer extends React.Component<IProps, IState> {
                                 </span>
                                 <Form.Item validateStatus={depositDeadlineDaysError ? 'error' : 'success'}>
                                     {getFieldDecorator('depositDeadlineDays', {
-                                        rules: [{ required: true, message: ' ' }],
                                         getValueFromEvent: this.formatDays
                                         })(
                                             <Input
@@ -266,15 +300,18 @@ class AppContainer extends React.Component<IProps, IState> {
                                 <span className="form__label">
                                     Дата окончания
                                 </span>
-                                <Form.Item>
+                                <Form.Item validateStatus={depositDeadlineDateError ? 'error' : 'success'}>
                                     {getFieldDecorator('depositDeadlineDate', {
                                         rules: [{ required: true, message: ' ' }],
-                                        initialValue: moment()
                                         })(
                                             <DatePicker
                                                 onChange={this.onDateChange}
                                                 locale={locale}
                                                 format='DD.MM.YYYY'
+                                                allowClear={false}
+                                                disabledDate={this.disableDeadlineDate}
+                                                placeholder="Выберите дату"
+                                                style={{width: 200}}
                                             />
                                         )
                                     }
